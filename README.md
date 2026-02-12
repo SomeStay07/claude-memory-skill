@@ -147,7 +147,7 @@ Layer 3: .claude/rules/*.md           File-pattern-specific rules
          │                            (activated by glob paths)
          ▼
 Layer 4: Agent memories               Per-agent learning
-                                      (auto-managed via memory: user)
+                                      (auto-managed by Claude Code)
 ```
 
 **No hardcoded paths** — Dynamic Context Injection (`!command`) discovers your project layout at runtime.
