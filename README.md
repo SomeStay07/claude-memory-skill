@@ -96,9 +96,9 @@ Every learning is classified before writing:
 
 | Level | When to Write | Example | Where |
 |:------|:-------------|:--------|:------|
-| 🔴 **CRITICAL** | Forgetting causes crash / total failure | Cookie format: SPACE after `;` | CLAUDE.md + deep memory |
-| 🟡 **HIGH** | Causes wrong behavior, hard to debug | `user_tweets()` returns promoted content | CLAUDE.md (1-line) + deep memory |
-| 🔵 **MEDIUM** | Saves significant time | Gemini needs "no Markdown" in prompt | Deep memory only |
+| 🔴 **CRITICAL** | Forgetting causes crash / total failure | DB migration requires `--fake-initial` flag | CLAUDE.md + deep memory |
+| 🟡 **HIGH** | Causes wrong behavior, hard to debug | Rate limiter resets at UTC midnight, not local | CLAUDE.md (1-line) + deep memory |
+| 🔵 **MEDIUM** | Saves significant time | ESLint needs flat config since v9 | Deep memory only |
 | ⚪ **LOW** | Nice-to-know, easily rediscovered | NPM cache location | Consider skipping |
 | ⬛ **SKIP** | One-time, generic, or obvious | "Use async/await" | Don't write |
 
