@@ -13,7 +13,7 @@
 [![Universal](https://img.shields.io/badge/Universal-Any_Project-teal?style=for-the-badge)]()
 [![Telegram](https://img.shields.io/badge/Community-Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/codeonvibes)
 
-[Features](#-features) · [How It Works](#-how-it-works) · [Demo](#-demo) · [Installation](#-installation) · [Comparison](#-vs-competitors)
+[Features](#features) · [How It Works](#how-it-works) · [Demo](#demo) · [Installation](#installation) · [Comparison](#vs-competitors)
 
 ```bash
 mkdir -p .claude/skills/memory && curl -o .claude/skills/memory/SKILL.md \
