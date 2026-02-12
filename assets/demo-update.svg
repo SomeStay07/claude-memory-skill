@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 520">
+  <style>
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink { 0%,100% { opacity: 1 } 50% { opacity: 0 } }
+    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+    .terminal { font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Menlo, monospace; font-size: 13px; }
+    .prompt { fill: #7C3AED; }
+    .command { fill: #F8F8F2; }
+    .header { fill: #50FA7B; font-weight: bold; }
+    .table-border { fill: #6272A4; }
+    .critical { fill: #FF5555; font-weight: bold; }
+    .high { fill: #FFB86C; font-weight: bold; }
+    .medium { fill: #F1FA8C; }
+    .file { fill: #8BE9FD; }
+    .stat { fill: #BD93F9; font-weight: bold; }
+    .dim { fill: #6272A4; }
+    .success { fill: #50FA7B; font-weight: bold; }
+    .skip { fill: #6272A4; font-style: italic; }
+    .white { fill: #F8F8F2; }
+
+    .cursor { animation: blink 1s step-end infinite; }
+
+    .line1 { animation: fadeIn 0.3s ease-in 0.5s both; }
+    .line2 { animation: fadeIn 0.3s ease-in 1.0s both; }
+    .line3 { animation: fadeIn 0.3s ease-in 1.2s both; }
+    .line4 { animation: fadeIn 0.3s ease-in 1.4s both; }
+    .line5 { animation: fadeIn 0.3s ease-in 1.6s both; }
+    .line6 { animation: fadeIn 0.3s ease-in 1.8s both; }
+    .line7 { animation: fadeIn 0.3s ease-in 2.0s both; }
+    .line8 { animation: fadeIn 0.3s ease-in 2.2s both; }
+    .line9 { animation: fadeIn 0.3s ease-in 2.4s both; }
+    .line10 { animation: fadeIn 0.3s ease-in 2.6s both; }
+    .line11 { animation: fadeIn 0.3s ease-in 2.8s both; }
+    .line12 { animation: fadeIn 0.3s ease-in 3.0s both; }
+    .line13 { animation: fadeIn 0.3s ease-in 3.2s both; }
+    .line14 { animation: fadeIn 0.3s ease-in 3.4s both; }
+    .line15 { animation: fadeIn 0.3s ease-in 3.6s both; }
+    .line16 { animation: fadeIn 0.3s ease-in 3.8s both; }
+    .line17 { animation: fadeIn 0.3s ease-in 4.0s both; }
+    .line18 { animation: fadeIn 0.3s ease-in 4.2s both; }
+    .line19 { animation: fadeIn 0.3s ease-in 4.4s both; }
+    .line20 { animation: fadeIn 0.3s ease-in 4.6s both; }
+    .line21 { animation: fadeIn 0.3s ease-in 4.8s both; }
+    .line22 { animation: fadeIn 0.3s ease-in 5.0s both; }
+    .line23 { animation: fadeIn 0.3s ease-in 5.2s both; }
+  </style>
+
+  <!-- Terminal window -->
+  <rect width="840" height="520" rx="10" fill="#282A36"/>
+
+  <!-- Title bar -->
+  <rect width="840" height="36" rx="10" fill="#1E1F29"/>
+  <rect y="26" width="840" height="10" fill="#1E1F29"/>
+  <circle cx="20" cy="18" r="6" fill="#FF5555"/>
+  <circle cx="40" cy="18" r="6" fill="#F1FA8C"/>
+  <circle cx="60" cy="18" r="6" fill="#50FA7B"/>
+  <text x="420" y="22" text-anchor="middle" class="terminal dim" font-size="12">claude-memory-skill — /memory update</text>
+
+  <g class="terminal" transform="translate(20, 56)">
+    <!-- Prompt line -->
+    <text y="0">
+      <tspan class="prompt">~/my-project $</tspan>
+      <tspan class="command"> /memory update</tspan>
+    </text>
+    <rect x="248" y="-10" width="8" height="14" fill="#F8F8F2" class="cursor" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0" dur="6s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- Scanning indicator -->
+    <g class="line1">
+      <text y="28" class="dim">Scanning conversation for learnings...</text>
+    </g>
+    <g class="line2">
+      <text y="48" class="dim">Reading 4 memory files (CLAUDE.md + 3 serena memories)...</text>
+    </g>
+
+    <!-- Header -->
+    <g class="line3">
+      <text y="76" class="header">Memory Update</text>
+    </g>
+
+    <!-- Extracted Learnings header -->
+    <g class="line4">
+      <text y="104" class="white" font-weight="bold">### Extracted Learnings</text>
+    </g>
+
+    <!-- Table header -->
+    <g class="line5">
+      <text y="124" class="table-border">| # | Learning                                    | Level    | File                    |</text>
+    </g>
+    <g class="line6">
+      <text y="140" class="table-border">|---|---------------------------------------------|----------|-------------------------|</text>
+    </g>
+
+    <!-- Row 1: CRITICAL -->
+    <g class="line7">
+      <text y="158">
+        <tspan class="table-border">| </tspan>
+        <tspan class="white">1</tspan>
+        <tspan class="table-border"> | </tspan>
+        <tspan class="white">Cookie format: SPACE after semicolon</tspan>
+        <tspan class="table-border">       | </tspan>
+        <tspan class="critical">CRITICAL</tspan>
+        <tspan class="table-border"> | </tspan>
+        <tspan class="file">CLAUDE.md + gotchas</tspan>
+        <tspan class="table-border">   |</tspan>
+      </text>
+    </g>
+
+    <!-- Row 2: HIGH -->
+    <g class="line8">
+      <text y="176">
+        <tspan class="table-border">| </tspan>
+        <tspan class="white">2</tspan>
+        <tspan class="table-border"> | </tspan>
+        <tspan class="white">user_tweets() returns promoted content</tspan>
+        <tspan class="table-border">     | </tspan>
+        <tspan class="high">HIGH    </tspan>
+        <tspan class="table-border"> | </tspan>
+        <tspan class="file">CLAUDE.md + twitter</tspan>
+        <tspan class="table-border">  |</tspan>
+      </text>
+    </g>
+
+    <!-- Row 3: HIGH -->
+    <g class="line9">
+      <text y="194">
+        <tspan class="table-border">| </tspan>
+        <tspan class="white">3</tspan>
+        <tspan class="table-border"> | </tspan>
+        <tspan class="white">Gemini needs "no Markdown" in prompt</tspan>
+        <tspan class="table-border">       | </tspan>
+        <tspan class="high">HIGH    </tspan>
+        <tspan class="table-border"> | </tspan>
+        <tspan class="file">ai-integration.md</tspan>
+        <tspan class="table-border">    |</tspan>
+      </text>
+    </g>
+
+    <!-- Row 4: MEDIUM -->
+    <g class="line10">
+      <text y="212">
+        <tspan class="table-border">| </tspan>
+        <tspan class="white">4</tspan>
+        <tspan class="table-border"> | </tspan>
+        <tspan class="white">Telegram parse_mode must be HTML</tspan>
+        <tspan class="table-border">           | </tspan>
+        <tspan class="medium">MEDIUM  </tspan>
+        <tspan class="table-border"> | </tspan>
+        <tspan class="file">telegram.md</tspan>
+        <tspan class="table-border">           |</tspan>
+      </text>
+    </g>
+
+    <!-- Changes section -->
+    <g class="line11">
+      <text y="244" class="white" font-weight="bold">### Changes</text>
+    </g>
+    <g class="line12">
+      <text y="264">
+        <tspan class="dim">- </tspan>
+        <tspan class="white" font-weight="bold">CLAUDE.md</tspan>
+        <tspan class="white">: +2 entries (rules #5, #6)</tspan>
+      </text>
+    </g>
+    <g class="line13">
+      <text y="282">
+        <tspan class="dim">- </tspan>
+        <tspan class="file">known-gotchas.md</tspan>
+        <tspan class="white">: +1 entry (cookie format detail)</tspan>
+      </text>
+    </g>
+    <g class="line14">
+      <text y="300">
+        <tspan class="dim">- </tspan>
+        <tspan class="file">ai-integration.md</tspan>
+        <tspan class="white">: +1 entry (Gemini no-markdown prompt)</tspan>
+      </text>
+    </g>
+    <g class="line15">
+      <text y="318">
+        <tspan class="dim">- </tspan>
+        <tspan class="white" font-weight="bold">Rules</tspan>
+        <tspan class="white">: no changes</tspan>
+      </text>
+    </g>
+
+    <!-- Dedup section -->
+    <g class="line16">
+      <text y="348" class="white" font-weight="bold">### Deduplication</text>
+    </g>
+    <g class="line17">
+      <text y="368">
+        <tspan class="dim">- Skipped: </tspan>
+        <tspan class="skip">"async everywhere" (already in CLAUDE.md #4)</tspan>
+      </text>
+    </g>
+    <g class="line18">
+      <text y="386">
+        <tspan class="dim">- Updated: </tspan>
+        <tspan class="white">"Telegram HTML parse mode" merged with existing</tspan>
+      </text>
+    </g>
+    <g class="line19">
+      <text y="404">
+        <tspan class="dim">- Contradictions resolved: </tspan>
+        <tspan class="white">0</tspan>
+      </text>
+    </g>
+
+    <!-- Stats -->
+    <g class="line20">
+      <text y="434" class="stat">Stats: +3 new | ~1 updated | -0 removed stale</text>
+    </g>
+
+    <!-- Consistency sweep -->
+    <g class="line21">
+      <text y="454" class="dim">Consistency sweep: 4 files checked, all agree</text>
+    </g>
+
+    <!-- Done -->
+    <g class="line22">
+      <text y="434" class="success" dy="48">/memory update complete</text>
+    </g>
+  </g>
+</svg>
