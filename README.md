@@ -15,7 +15,7 @@
 [![Universal](https://img.shields.io/badge/Universal-Any_Project-teal?style=for-the-badge)]()
 [![Telegram](https://img.shields.io/badge/Community-Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/codeonvibes)
 
-[Features](#features) · [How It Works](#how-it-works) · [Demo](#demo) · [Installation](#installation) · [Comparison](#comparison)
+[Features](#features) · [How It Works](#how-it-works) · [Architecture](#memory-architecture) · [Demo](#demo) · [Installation](#installation) · [Usage](#usage-examples) · [Comparison](#comparison)
 
 ```bash
 mkdir -p .claude/skills/memory && curl -o .claude/skills/memory/SKILL.md \
@@ -38,7 +38,7 @@ You finish a productive session with Claude Code. Bugs fixed, architecture decis
 
 ## What This Does
 
-**Claude Memory Skill** is a single `.md` file you drop into `.claude/skills/memory/`. It scans your conversations for corrections, bug fixes, and gotchas — deduplicates them against existing memory — and persists to your project files. No dependencies, no config.
+**Claude Memory Skill** is a single `.md` file you drop into `.claude/skills/memory/`. [Skills](https://docs.anthropic.com/en/docs/agents) are reusable prompt instructions that Claude Code loads on matching commands — like plugins, but zero-code. This one scans your conversations for corrections, bug fixes, and gotchas — deduplicates them against existing memory — and persists to your project files. No dependencies, no config.
 
 ```
 /memory update     Scan conversation, extract learnings, persist to memory
@@ -47,15 +47,7 @@ You finish a productive session with Claude Code. Bugs fixed, architecture decis
 /memory status     Quick health check of all memory files
 ```
 
-Before writing anything, each learning passes a 3-question quality gate, dedup check against existing memory, and a consistency sweep across all files.
-
-<div align="center">
-<br>
-<img src="assets/demo-update.gif" alt="Claude Memory Skill — /memory update demo" width="800">
-<br>
-<sub>What /memory update looks like — real learnings, real dedup, no bloat</sub>
-<br><br>
-</div>
+Before writing anything, each learning passes a 3-question quality gate, dedup check against existing memory, and a consistency sweep across all files. See [Demo](#demo) for a walkthrough.
 
 ## At a Glance
 
@@ -66,15 +58,13 @@ Before writing anything, each learning passes a 3-question quality gate, dedup c
 ```
 ✅ 4 modes (update/prune/reflect/status)
 ✅ 5-level confidence scoring
-✅ Contradiction detection (memory vs code)
-✅ Stale entry detection
-✅ Canonical Location Map
-✅ Dynamic Context Injection
 ✅ 4-layer memory hierarchy
+✅ One topic → one file (no duplicates)
+✅ Auto-discovers project layout at runtime
 ✅ Anti-bloat quality gate
 ✅ 0 dependencies, 0 config
 ✅ 1 file — copy and use
-✅ Bilingual (EN + RU)
+✅ Responds in your language (EN, RU, etc.)
 ```
 
 </td>
@@ -227,15 +217,15 @@ You should see:
 Memory Update
 
 ### Extracted Learnings
-| # | Learning                              | Level    | File                          |
-|---|---------------------------------------|----------|-------------------------------|
-| 1 | Cookie format requires space after ;  | CRITICAL | CLAUDE.md + known-gotchas.md  |
-| 2 | user_tweets() returns promoted tweets | HIGH     | CLAUDE.md + twitter-source.md |
-| 3 | Gemini needs "no Markdown" in prompt  | MEDIUM   | ai-integration.md             |
+| # | Learning                              | Level    | File                        |
+|---|---------------------------------------|----------|-----------------------------|
+| 1 | DB migration requires --fake-initial  | CRITICAL | CLAUDE.md + db-gotchas.md   |
+| 2 | Rate limiter resets at UTC midnight   | HIGH     | CLAUDE.md + api-notes.md    |
+| 3 | ESLint needs flat config since v9     | MEDIUM   | tooling.md                  |
 
 ### Deduplication
-- Skipped (already exists): "async everywhere" (in CLAUDE.md #4)
-- Updated (merged): "Telegram HTML parse mode" (poster.py section)
+- Skipped (already exists): "use async/await for DB calls" (in CLAUDE.md #4)
+- Updated (merged): "Redis connection pooling" (caching section)
 
 Stats: +2 new | ~1 updated | -0 removed stale
 
@@ -250,8 +240,8 @@ Stats: +2 new | ~1 updated | -0 removed stale
 Memory Health Report
 
 ### Duplicates: 2 found
-### Contradictions: 1 found (memory says "twikit", code uses twscrape)
-### Stale: 1 entry references removed file
+### Contradictions: 1 found (memory says "axios", code uses fetch)
+### Stale: 1 entry references deleted file
 
 Total: 2 duplicates | 1 contradiction | 1 stale | 0 compactable
 
@@ -264,8 +254,8 @@ Apply fixes? (confirm which ones)
 > /memory reflect
 
 Corrections Found:
-1. [HIGH] "Don't use Markdown in Gemini prompt" → ai-integration.md
-2. [HIGH] "Filter promoted tweets by username" → twitter-source.md
+1. [HIGH] "Cache TTL must be > 60s or it loops" → caching.md
+2. [HIGH] "Auth token refresh needs force=true" → auth-notes.md
 
 Found: 3 | Written: 2 | Skipped (dupes): 1
 ```
@@ -343,6 +333,7 @@ claude-memory-skill/
 ├── LICENSE                 MIT
 ├── README.md               This file
 ├── assets/
+│   ├── logo.svg            Project logo
 │   ├── demo-update.gif     /memory update animation
 │   ├── demo-prune.gif      /memory prune animation
 │   └── demo-status.gif     /memory status animation
