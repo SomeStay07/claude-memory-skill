@@ -2,9 +2,9 @@
 
 # Claude Memory Skill
 
-**Persistent, self-healing project memory for Claude Code**
+**Persistent project memory for Claude Code**
 
-*A Claude Code skill that learns from your corrections, detects contradictions, and prevents knowledge rot — automatically*
+*One `.md` file — Claude learns from your corrections, catches contradictions in memory, and cleans up after itself*
 
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-7C3AED?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IndoaXRlIi8+PC9zdmc+)](https://docs.anthropic.com/en/docs/agents)
 [![License: MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
@@ -13,7 +13,7 @@
 [![Universal](https://img.shields.io/badge/Universal-Any_Project-teal?style=for-the-badge)]()
 [![Telegram](https://img.shields.io/badge/Community-Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/codeonvibes)
 
-[Features](#features) · [How It Works](#how-it-works) · [Demo](#demo) · [Installation](#installation) · [Comparison](#vs-competitors)
+[Features](#features) · [How It Works](#how-it-works) · [Demo](#demo) · [Installation](#installation) · [Comparison](#comparison)
 
 ```bash
 mkdir -p .claude/skills/memory && curl -o .claude/skills/memory/SKILL.md \
@@ -34,9 +34,9 @@ You finish a productive session with Claude Code. Bugs fixed, architecture decis
 - Memory files accumulate **duplicates, contradictions**, and stale entries
 - CLAUDE.md **bloats** beyond usefulness — 500 lines of noise
 
-## The Solution
+## What This Does
 
-**Claude Memory Skill** is a `.md` file that gives Claude Code persistent, self-maintaining memory. It scans conversations for learnings and keeps your knowledge files clean.
+**Claude Memory Skill** is a single `.md` file you drop into `.claude/skills/memory/`. It scans your conversations for corrections, bug fixes, and gotchas — deduplicates them against existing memory — and persists to your project files. No dependencies, no config.
 
 ```
 /memory update     Scan conversation, extract learnings, persist to memory
@@ -45,7 +45,7 @@ You finish a productive session with Claude Code. Bugs fixed, architecture decis
 /memory status     Quick health check of all memory files
 ```
 
-Every learning goes through a **3-question quality gate**, **deduplication check**, and **consistency sweep** before being written.
+Before writing anything, each learning passes a 3-question quality gate, dedup check against existing memory, and a consistency sweep across all files.
 
 <div align="center">
 <br>
@@ -55,7 +55,7 @@ Every learning goes through a **3-question quality gate**, **deduplication check
 <br><br>
 </div>
 
-## Why This Skill
+## At a Glance
 
 <table>
 <tr>
@@ -122,44 +122,25 @@ Three questions filter 60–70% of potential entries:
 
 ## How It Works
 
-```mermaid
-flowchart TD
-    A[📥 /memory update] --> B[Scan Conversation]
-    B --> C{Extract Learnings}
-    C --> D[User Corrections — HIGHEST]
-    C --> E[Bug Fixes — HIGH]
-    C --> F[Architecture Decisions — HIGH]
-    C --> G[API Quirks / Config / Deploy — MEDIUM]
-
-    D & E & F & G --> H[Quality Gate]
-    H --> I{3 Questions}
-    I -->|Would forgetting cause bugs?| J{Yes/No}
-    I -->|Project-specific?| K{Yes/No}
-    I -->|Already exists?| L{Yes/No}
-
-    J & K & L --> M[Confidence Scoring]
-    M --> N[🔴 CRITICAL: CLAUDE.md + Deep Memory]
-    M --> O[🟡 HIGH: CLAUDE.md 1-line + Deep Memory]
-    M --> P[🔵 MEDIUM: Deep Memory Only]
-    M --> Q[⬛ LOW/SKIP: Don't Write]
-
-    N & O & P --> R[Deduplication Check]
-    R --> S{Grep All Files}
-    S -->|Exact Match| T[SKIP]
-    S -->|Partial Overlap| U[UPDATE Existing]
-    S -->|Contradicts| V[Resolve: Session = Fresher]
-    S -->|Truly New| W[Write to Canonical Location]
-
-    U & V & W --> X[Consistency Sweep]
-    X --> Y[✅ Cross-verify All Files]
-    Y --> Z[📊 Report]
+```
+/memory update
+│
+├─ 1. Scan conversation for corrections, bug fixes, gotchas
+├─ 2. Quality gate — 3 questions filter ~60% of noise
+├─ 3. Classify by confidence (CRITICAL → HIGH → MEDIUM → SKIP)
+├─ 4. Dedup — grep all memory files for exact/partial matches
+│     ├─ Exact match? → skip
+│     ├─ Partial overlap? → update existing entry
+│     └─ Contradicts? → resolve (session data = fresher)
+├─ 5. Write to canonical location (one topic → one file)
+└─ 6. Consistency sweep — cross-verify all files agree
 ```
 
 ---
 
 ## Memory Architecture
 
-The skill auto-discovers your project's memory layout and works with whatever it finds:
+Auto-discovers your project layout at startup. Works with whatever memory structure you already have:
 
 ```
 Layer 1: CLAUDE.md                    Critical rules (read every session)
@@ -177,7 +158,7 @@ Layer 4: Agent memories               Per-agent learning
                                       (auto-managed via memory: user)
 ```
 
-**No hardcoded paths** — Dynamic Context Injection (`!`command``) discovers your project layout at runtime.
+**No hardcoded paths** — Dynamic Context Injection (`!command`) discovers your project layout at runtime.
 
 ---
 
@@ -294,7 +275,7 @@ Found: 3 | Written: 2 | Skipped (dupes): 1
 | Decision | Why |
 |:---------|:----|
 | **Skill, not Agent** | Skills see the current conversation. Agents can't — critical for `/memory update` which scans the chat. |
-| **Dynamic Context Injection** | `!`command`` in SKILL.md runs before prompt processing. Auto-discovers your project — no hardcoded paths. |
+| **Dynamic Context Injection** | `!command` in SKILL.md runs before prompt processing. Auto-discovers your project — no hardcoded paths. |
 | **Canonical Location Map** | Each topic → ONE source of truth. Cross-references, not duplicates. Prevents sprawl. |
 | **Quality Gate** | 3 questions filter 60–70% of entries. Prevents CLAUDE.md bloat. |
 | **Edit, don't rewrite** | Surgical changes preserve existing structure. Full rewrites risk destroying manual content. |
@@ -302,18 +283,18 @@ Found: 3 | Written: 2 | Skipped (dupes): 1
 
 ---
 
-## Vs. Competitors
+## Comparison
 
-Based on analysis of 14+ Claude Code memory tools:
+Tested against 14+ Claude Code memory tools:
 
 | Feature | /memory | claude-mem | claude-reflect | Pro Workflow | Cipher | napkin |
 |:--------|:-------:|:---------:|:--------------:|:-----------:|:------:|:------:|
 | Conversation scanning | ✅ | ✅ | Corrections | ✅ | ❌ | Manual |
 | Deduplication | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ |
-| **Contradiction detection** | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **Stale entry detection** | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **Canonical Location Map** | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **Dynamic Context Injection** | **✅** | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Contradiction detection | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Stale entry detection | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Canonical Location Map | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Dynamic Context Injection | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Confidence scoring | ✅ | ❌ | ✅ | Categories | ❌ | ❌ |
 | Multi-layer hierarchy | 4 | 3 | 2 | 2 | 2 | 1 |
 | Prune / cleanup mode | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
@@ -321,7 +302,7 @@ Based on analysis of 14+ Claude Code memory tools:
 | Setup time | 10 sec | 5 min | 10 sec | 30 sec | 10 min | 10 sec |
 | Cost | Free | Free | Free | Free | Free | Free |
 
-**Bold** = features unique to `/memory` (no competitor has them).
+Rows with all ❌ except `/memory` = features no other tool has.
 
 ---
 
@@ -346,7 +327,9 @@ Based on analysis of 14+ Claude Code memory tools:
 | No memory files detected | Create a `CLAUDE.md` in your project root |
 | Skill not recognized | Check file is at `.claude/skills/memory/SKILL.md` (exact path) |
 | Changes not persisting | Verify Claude Code has write permission to project files |
-| CLAUDE.md over limit | Run `/memory prune health` to identify entries to compress |
+| CLAUDE.md over limit | Run `/memory prune` to identify entries to compress |
+| `/memory update` finds nothing | Normal — not every session has learnings worth saving |
+| Secrets in memory files | The skill reads your conversation. Don't discuss API keys right before `/memory update` |
 
 ---
 
@@ -405,13 +388,11 @@ disable-model-invocation: true  # Runs in current conversation
 
 ## Acknowledgements
 
-Inspired by research into best practices from:
-- [claude-reflect](https://github.com/BayramAnnakov/claude-reflect) — correction capture, confidence scoring
-- [napkin](https://github.com/blader/napkin) — minimalist scratchpad approach
-- [Pro Workflow](https://github.com/rohitg00/pro-workflow) — self-correcting memory loops
-- [claude-diary](https://github.com/rlancemartin/claude-diary) — three-tier observation/reflection/retrieval
-- [claude-code-auto-memory](https://github.com/severity1/claude-code-auto-memory) — PostToolUse auto-sync
-- [code-review-agent](https://github.com/SomeStay07/code-review-agent) — single-file distribution pattern
+Built after studying 14+ Claude Code memory tools. Key influences:
+- [claude-reflect](https://github.com/BayramAnnakov/claude-reflect) — the idea of capturing user corrections as highest-priority learnings
+- [napkin](https://github.com/blader/napkin) — proof that a scratchpad approach works; we added structure on top
+- [claude-diary](https://github.com/rlancemartin/claude-diary) — three-tier observation/reflection model that shaped our layer hierarchy
+- [code-review-agent](https://github.com/SomeStay07/code-review-agent) — single-file distribution pattern (one `.md` IS the product)
 
 ---
 
