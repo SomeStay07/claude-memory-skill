@@ -389,6 +389,10 @@ Built after studying 14+ Claude Code memory tools. Key influences:
 
 ---
 
+## See Also
+
+**[Code Reviewer Agent](https://github.com/SomeStay07/code-review-agent)** — automated code review for Claude Code. 14 categories, OWASP security checks, auto-fix. Works well together: this skill remembers what matters, the reviewer catches what's broken.
+
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
