@@ -1,69 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <!-- Brain silhouette with characteristic bumps (gyri) -->
+  <!--
+    Claude Memory Skill Logo v5 — final
+    Rounded square. Left = 3 brain arcs. Right = {} cursor.
+    Balanced visual weight. Clean geometry.
+  -->
+
+  <!-- Background -->
+  <rect x="20" y="20" width="160" height="160" rx="36" fill="#7C3AED"/>
+
+  <!-- Vertical divider -->
+  <line x1="100" y1="46" x2="100" y2="154" stroke="white" stroke-width="1.5" opacity="0.25"/>
+
+  <!-- LEFT: 3 brain-fold arcs — deeper curves for visual weight -->
+  <path d="M 40 74 Q 64 56, 88 74" stroke="white" stroke-width="3.2" fill="none" stroke-linecap="round" opacity="0.85"/>
+  <path d="M 40 100 Q 64 82, 88 100" stroke="white" stroke-width="3.2" fill="none" stroke-linecap="round" opacity="0.85"/>
+  <path d="M 40 126 Q 64 108, 88 126" stroke="white" stroke-width="3.2" fill="none" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- RIGHT: { } braces — softer curves, thinner to balance -->
+  <!-- { -->
   <path d="
-    M 100 170
-    C 80 170, 72 174, 66 174
-    C 54 174, 48 166, 48 158
-    C 48 152, 52 146, 52 140
-    C 38 132, 28 116, 28 96
-    C 28 80, 34 66, 44 56
-    C 40 48, 38 38, 44 32
-    C 50 26, 58 28, 64 32
-    C 70 24, 82 20, 96 20
-    L 100 20
-    L 104 20
-    C 118 20, 130 24, 136 32
-    C 142 28, 150 26, 156 32
-    C 162 38, 160 48, 156 56
-    C 166 66, 172 80, 172 96
-    C 172 116, 162 132, 148 140
-    C 148 146, 152 152, 152 158
-    C 152 166, 146 174, 134 174
-    C 128 174, 120 170, 100 170 Z
-  " fill="#7C3AED" stroke="none"/>
+    M 124 62
+    Q 118 62, 118 72
+    L 118 90
+    Q 118 97, 113 100
+    Q 118 103, 118 110
+    L 118 128
+    Q 118 138, 124 138
+  " stroke="white" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0.85"/>
 
-  <!-- Brain stem hint -->
-  <path d="M 92 170 C 92 180, 94 186, 100 186 C 106 186, 108 180, 108 170"
-    fill="#7C3AED" stroke="none"/>
+  <!-- } -->
+  <path d="
+    M 152 62
+    Q 158 62, 158 72
+    L 158 90
+    Q 158 97, 163 100
+    Q 158 103, 158 110
+    L 158 128
+    Q 158 138, 152 138
+  " stroke="white" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0.85"/>
 
-  <!-- Center fissure (longitudinal) -->
-  <line x1="100" y1="26" x2="100" y2="168" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
-
-  <!-- LEFT HEMISPHERE — organic brain folds (sulci) -->
-  <!-- Top fold -->
-  <path d="M 48 62 C 56 56, 70 64, 80 54 C 86 48, 92 46, 96 42"
-    stroke="white" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0.8"/>
-  <!-- Middle fold -->
-  <path d="M 36 90 C 46 82, 58 94, 72 84 C 80 78, 90 80, 96 74"
-    stroke="white" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0.8"/>
-  <!-- Lower fold -->
-  <path d="M 38 114 C 48 106, 60 118, 74 108 C 82 102, 90 106, 96 100"
-    stroke="white" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0.8"/>
-  <!-- Bottom fold -->
-  <path d="M 50 136 C 60 128, 70 138, 82 130 C 88 126, 94 128, 96 124"
-    stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>
-
-  <!-- RIGHT HEMISPHERE — code symbols replacing folds -->
-  <!-- Curly brace { -->
-  <path d="M 120 48
-    C 116 48, 114 52, 114 58
-    L 114 80
-    C 114 86, 110 90, 108 92
-    C 110 94, 114 98, 114 104
-    L 114 126
-    C 114 132, 116 136, 120 136"
-    stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-
-  <!-- Curly brace } -->
-  <path d="M 148 48
-    C 152 48, 154 52, 154 58
-    L 154 80
-    C 154 86, 158 90, 160 92
-    C 158 94, 154 98, 154 104
-    L 154 126
-    C 154 132, 152 136, 148 136"
-    stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-
-  <!-- Terminal cursor between braces — the "memory write" moment -->
-  <rect x="132" y="82" width="3" height="20" rx="1" fill="white" opacity="0.95"/>
+  <!-- Cursor -->
+  <rect x="136.5" y="90" width="3" height="20" rx="1.5" fill="white" opacity="0.9"/>
 </svg>
