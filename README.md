@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.svg" alt="Claude Memory Skill" width="120" height="120">
+
 # Claude Memory Skill
 
 **Persistent project memory for Claude Code**
