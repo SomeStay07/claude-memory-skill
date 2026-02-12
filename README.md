@@ -49,7 +49,7 @@ Every learning goes through a **3-question quality gate**, **deduplication check
 
 <div align="center">
 <br>
-<img src="assets/demo-update.svg" alt="Claude Memory Skill — /memory update demo" width="800">
+<img src="assets/demo-update.gif" alt="Claude Memory Skill — /memory update demo" width="800">
 <br>
 <sub>What /memory update looks like — real learnings, real dedup, no bloat</sub>
 <br><br>
@@ -186,19 +186,19 @@ Layer 4: Agent memories               Per-agent learning
 ### `/memory update` — Learn from conversation
 
 <div align="center">
-<img src="assets/demo-update.svg" alt="/memory update — extracting learnings from conversation" width="800">
+<img src="assets/demo-update.gif" alt="/memory update — extracting learnings from conversation" width="800">
 </div>
 
 ### `/memory prune` — Find & fix issues
 
 <div align="center">
-<img src="assets/demo-prune.svg" alt="/memory prune — detecting duplicates and contradictions" width="800">
+<img src="assets/demo-prune.gif" alt="/memory prune — detecting duplicates and contradictions" width="800">
 </div>
 
 ### `/memory status` — Health overview
 
 <div align="center">
-<img src="assets/demo-status.svg" alt="/memory status — memory health dashboard" width="800">
+<img src="assets/demo-status.gif" alt="/memory status — memory health dashboard" width="800">
 </div>
 
 ---
@@ -358,9 +358,9 @@ claude-memory-skill/
 ├── LICENSE                 MIT
 ├── README.md               This file
 ├── assets/
-│   ├── demo-update.svg     /memory update animation
-│   ├── demo-prune.svg      /memory prune animation
-│   └── demo-status.svg     /memory status animation
+│   ├── demo-update.gif     /memory update animation
+│   ├── demo-prune.gif      /memory prune animation
+│   └── demo-status.gif     /memory status animation
 └── SKILL.md                THE skill file (this IS the product)
 ```
 
