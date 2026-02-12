@@ -8,7 +8,7 @@
 
 *One `.md` file — Claude learns from your corrections, catches contradictions in memory, and cleans up after itself*
 
-[![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-7C3AED?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IndoaXRlIi8+PC9zdmc+)](https://docs.anthropic.com/en/docs/agents)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-7C3AED?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IndoaXRlIi8+PC9zdmc+)](https://code.claude.com/docs/en/skills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
 [![0 Dependencies](https://img.shields.io/badge/0_Dependencies-blue?style=for-the-badge)]()
 [![1 File](https://img.shields.io/badge/1_File-orange?style=for-the-badge)]()
@@ -38,7 +38,7 @@ You finish a productive session with Claude Code. Bugs fixed, architecture decis
 
 ## What This Does
 
-**Claude Memory Skill** is a single `.md` file you drop into `.claude/skills/memory/`. [Skills](https://docs.anthropic.com/en/docs/agents) are reusable prompt instructions that Claude Code loads on matching commands — like plugins, but zero-code. This one scans your conversations for corrections, bug fixes, and gotchas — deduplicates them against existing memory — and persists to your project files. No dependencies, no config.
+**Claude Memory Skill** is a single `.md` file you drop into `.claude/skills/memory/`. [Skills](https://code.claude.com/docs/en/skills) are reusable prompt instructions that Claude Code loads on matching commands — like plugins, but zero-code. This one scans your conversations for corrections, bug fixes, and gotchas — deduplicates them against existing memory — and persists to your project files. No dependencies, no config.
 
 ```
 /memory update     Scan conversation, extract learnings, persist to memory
@@ -96,9 +96,9 @@ Every learning is classified before writing:
 
 | Level | When to Write | Example | Where |
 |:------|:-------------|:--------|:------|
-| 🔴 **CRITICAL** | Forgetting causes crash / total failure | DB migration requires `--fake-initial` flag | CLAUDE.md + deep memory |
-| 🟡 **HIGH** | Causes wrong behavior, hard to debug | Rate limiter resets at UTC midnight, not local | CLAUDE.md (1-line) + deep memory |
-| 🔵 **MEDIUM** | Saves significant time | ESLint needs flat config since v9 | Deep memory only |
+| 🔴 **CRITICAL** | Forgetting causes crash / total failure | DB migration requires `--fake-initial` flag | CLAUDE.md + Layer 2 file |
+| 🟡 **HIGH** | Causes wrong behavior, hard to debug | Rate limiter resets at UTC midnight, not local | CLAUDE.md (1-line) + Layer 2 |
+| 🔵 **MEDIUM** | Saves significant time | ESLint needs flat config since v9 | Layer 2 only |
 | ⚪ **LOW** | Nice-to-know, easily rediscovered | NPM cache location | Consider skipping |
 | ⬛ **SKIP** | One-time, generic, or obvious | "Use async/await" | Don't write |
 
