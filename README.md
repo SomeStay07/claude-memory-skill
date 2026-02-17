@@ -58,9 +58,11 @@ Before writing anything, each learning passes a 3-question quality gate, dedup c
 ```
 ✅ 4 modes (update/prune/reflect/status)
 ✅ 5-level confidence scoring
-✅ 4-layer memory hierarchy
+✅ 5-layer memory hierarchy
+✅ Auto-memory (~/.claude/projects/) support
 ✅ One topic → one file (no duplicates)
 ✅ Auto-discovers project layout at runtime
+✅ Migration & test infra learning categories
 ✅ Anti-bloat quality gate
 ✅ 0 dependencies, 0 config
 ✅ 1 file — copy and use
@@ -143,10 +145,14 @@ Layer 2: .serena/memories/*.md        Detailed context by topic
          OR memory-bank/
          │
          ▼
-Layer 3: .claude/rules/*.md           File-pattern-specific rules
+Layer 3: ~/.claude/projects/.../      Claude Code native auto-memory
+         memory/MEMORY.md             (personal, local, loaded into system prompt)
+         │
+         ▼
+Layer 4: .claude/rules/*.md           File-pattern-specific rules
          │                            (activated by glob paths)
          ▼
-Layer 4: Agent memories               Per-agent learning
+Layer 5: Agent memories               Per-agent learning
                                       (auto-managed by Claude Code)
 ```
 
@@ -260,6 +266,43 @@ Corrections Found:
 Found: 3 | Written: 2 | Skipped (dupes): 1
 ```
 
+### Real-World Example: DI Framework Migration
+
+After migrating a 85+ service DI container from tsyringe to a custom zero-dependency solution:
+
+```
+> /memory update
+
+Memory Update
+
+### Extracted Learnings
+| # | Learning                                                          | Level    | File                          |
+|---|-------------------------------------------------------------------|----------|-------------------------------|
+| 1 | Global test setup mocks DI modules — tests needing real DI must  | CRITICAL | CLAUDE.md + testing-patterns  |
+|   | use vi.unmock('@/lib/di/globals') before imports                  |          |                               |
+| 2 | Composition root smoke test needs vi.unmock for service modules   | HIGH     | di-container + testing-patterns|
+|   | that global setup mocks (CourseApiService, QuestionService)       |          |                               |
+| 3 | ESLint no-undef doesn't recognize global .d.ts types —           | HIGH     | typescript-gotchas            |
+|   | export/import types explicitly instead                            |          |                               |
+| 4 | Pre-push hook CPU contention makes perf tests flaky —            | MEDIUM   | testing-patterns              |
+|   | use 3x threshold for timing assertions                            |          |                               |
+
+### Changes
+- **CLAUDE.md**: Updated DI section (tsyringe → custom container)
+- **di-container**: Added test suite docs (106 tests, 7 files)
+- **testing-patterns**: Added DI mock patterns, vi.unmock guide
+- **architecture-decisions**: Updated "Why Custom DI" rationale
+- **Auto-memory**: Added Custom DI Container section to MEMORY.md
+
+### Deduplication
+- Updated (merged with existing): "DI mocking patterns" in testing-patterns
+- Contradictions found & resolved: 1 (CLAUDE.md said "tsyringe", now "custom DI")
+
+Stats: +8 new | ~5 updated | -3 removed stale (old tsyringe entries)
+
+/memory update complete
+```
+
 ---
 
 ## Key Design Decisions
@@ -288,7 +331,8 @@ Tested against 14+ Claude Code memory tools:
 | Canonical Location Map | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Dynamic Context Injection | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Confidence scoring | ✅ | ❌ | ✅ | Categories | ❌ | ❌ |
-| Multi-layer hierarchy | 4 | 3 | 2 | 2 | 2 | 1 |
+| Auto-memory support | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Multi-layer hierarchy | 5 | 3 | 2 | 2 | 2 | 1 |
 | Prune / cleanup mode | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Zero dependencies | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ |
 | Setup time | 10 sec | 5 min | 10 sec | 30 sec | 10 min | 10 sec |
@@ -307,6 +351,7 @@ Rows with all ❌ except `/memory` = features no other tool has.
 | Projects with CLAUDE.md only | ✅ Works with CLAUDE.md as primary storage |
 | Projects with `.claude/rules/` | ✅ Auto-detects conditional rules |
 | Projects with `memory-bank/` | ✅ Auto-detects custom locations |
+| Claude Code auto-memory | ✅ Auto-detects `~/.claude/projects/.../memory/` |
 | Monorepo (multiple CLAUDE.md) | ✅ Root + subdirectory hierarchy |
 
 ---
@@ -321,6 +366,8 @@ Rows with all ❌ except `/memory` = features no other tool has.
 | Changes not persisting | Verify Claude Code has write permission to project files |
 | CLAUDE.md over limit | Run `/memory prune` to identify entries to compress |
 | `/memory update` finds nothing | Normal — not every session has learnings worth saving |
+| Auto-memory not detected | Path is derived from project dir hash. Run `/memory status` to see detected path |
+| Auto-memory vs CLAUDE.md confusion | CLAUDE.md = git-tracked team rules. Auto-memory = local personal learnings |
 | Secrets in memory files | The skill reads your conversation. Don't discuss API keys right before `/memory update` |
 
 ---
@@ -366,7 +413,7 @@ disable-model-invocation: true  # Runs in current conversation
 # Sections:
 # 1. Language Rule
 # 2. Auto-Discovered Project Layout (DCI)
-# 3. Memory Architecture (4 layers)
+# 3. Memory Architecture (5 layers)
 # 4. Meta-Rules (format, anti-bloat, quality gate)
 # 5. Canonical Location Map
 # 6. MODE: update (6-step process)

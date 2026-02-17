@@ -42,6 +42,9 @@ They auto-discover the project's memory layout — no hardcoded paths needed.
 ### Claude rules (if present):
 !`if [ -d ".claude/rules" ]; then ls .claude/rules/*.md 2>/dev/null; else echo "No .claude/rules/ found"; fi`
 
+### Auto-memory (Claude Code native):
+!`project_hash=$(echo "$PWD" | sed 's|/|-|g; s|^-||'); dir="$HOME/.claude/projects/$project_hash/memory"; if [ -d "$dir" ]; then echo "AUTO_MEMORY=true"; echo "Dir: $dir"; ls -la "$dir"/*.md 2>/dev/null | awk '{print $NF, $5"b"}'; else echo "AUTO_MEMORY=false"; fi`
+
 ### Other memory locations:
 !`ls docs/project_notes/*.md 2>/dev/null; ls memory-bank/*.md 2>/dev/null; echo "---"`
 
@@ -62,11 +65,18 @@ Based on the auto-discovered layout above, use ALL detected memory locations. Th
 - **If no Serena**: Use CLAUDE.md sections or `.claude/rules/*.md` for topical storage.
 - **Rules**: One topic per file. Cross-reference, don't duplicate.
 
-### Layer 3: Conditional Rules (.claude/rules/)
+### Layer 3: Auto-Memory (~/.claude/projects/.../memory/)
+- **Purpose**: Claude Code's native per-project persistent memory. `MEMORY.md` is loaded into system prompt every session.
+- **Auto-discovered**: Path derived from project directory hash.
+- **Rules**: Concise, max ~200 lines (truncated after that). Good for cross-session patterns, user preferences, recurring mistakes.
+- **Updates**: Use `Write` / `Edit` tools directly on the file.
+- **Relationship to CLAUDE.md**: CLAUDE.md = project rules (checked into git). Auto-memory = personal learnings (local, not in git).
+
+### Layer 4: Conditional Rules (.claude/rules/)
 - **Purpose**: File-pattern-specific coding rules (activated by glob paths in YAML frontmatter).
 - **Rules**: Only update if a new file-specific coding pattern was discovered.
 
-### Layer 4: Agent Memories (auto-managed)
+### Layer 5: Agent Memories (auto-managed)
 - **Purpose**: Per-agent learning via `memory: user` field in agent frontmatter.
 - **Not directly editable** — note in output if a learning is agent-specific.
 
@@ -129,6 +139,8 @@ Extract learnings in these categories:
 | **API/Library Quirk** | Unexpected behavior from any external service | HIGH |
 | **Config Change** | New files, settings, dependencies added | MEDIUM |
 | **Code Convention** | New project pattern or anti-pattern | MEDIUM |
+| **Migration/Refactor** | Framework swap, DI migration, API rewrite — decisions, gotchas, rollback notes | MEDIUM |
+| **Test Infrastructure** | Mock patterns, setup architecture, flaky test fixes, CI quirks | MEDIUM |
 | **Deployment Learning** | Environment/hosting quirks | MEDIUM |
 | **Skill/Workflow** | New skill created, hook added, tool configured | MEDIUM |
 
@@ -186,6 +198,7 @@ Memory Update
 ### Changes
 - **CLAUDE.md**: [changes] or "no changes"
 - **[deep memory files]**: [changes per file]
+- **Auto-memory**: [changes] or "no changes"
 - **Rules**: [changes] or "no changes"
 
 ### Deduplication
@@ -352,6 +365,7 @@ Memory Status
 Total: X files | Y lines | Z entries
 CLAUDE.md: X/120 lines (OK/WARNING)
 Serena: present/absent
+Auto-memory: present/absent (X/200 lines)
 
 Last /memory update: [date or "never"]
 ```
@@ -392,3 +406,5 @@ Parse the first argument as MODE, remaining as options:
 - **Conservative pruning** — flag for review rather than auto-delete
 - **Dates matter** — add "Added: YYYY-MM-DD" to new entries
 - **Report before fix** — in prune mode, always show findings before making changes
+- **Auto-memory vs CLAUDE.md** — CLAUDE.md is git-tracked project rules (shared with team). Auto-memory is local personal learnings (user preferences, recurring mistakes, workflow notes). Don't put the same info in both
+- **Migration learnings are high-value** — framework swaps, DI rewrites, API migrations produce many gotchas. Capture the pattern (what broke, why, how to avoid), not the one-time task details
